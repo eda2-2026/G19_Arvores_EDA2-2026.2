@@ -1,7 +1,7 @@
-
 import streamlit as st
-import streamlit.components.v1 as components
-from html import escape
+from components.controles import exibir_controles, criar_arvore_exemplo
+from components.visualizacao import exibir_visualizacao
+from components.informacoes import exibir_informacoes
 
 st.set_page_config(page_title="Simulador de Árvore Rubro-Negra", page_icon="🌳", layout="wide")
 
@@ -23,40 +23,11 @@ header, footer { visibility:hidden; }
 </style>
 """, unsafe_allow_html=True)
 
-NODES = [
-    {"value":20,"color":"black","x":500,"y":75,"parent":None},
-    {"value":10,"color":"red","x":290,"y":190,"parent":20},
-    {"value":30,"color":"black","x":710,"y":190,"parent":20},
-    {"value":5,"color":"black","x":185,"y":305,"parent":10},
-    {"value":15,"color":"black","x":395,"y":305,"parent":10},
-    {"value":25,"color":"red","x":605,"y":305,"parent":30},
-    {"value":40,"color":"red","x":815,"y":305,"parent":30},
-]
-
-def render_svg(nodes):
-    lookup = {n["value"]: n for n in nodes}
-    edges = []
-    for n in nodes:
-        if n["parent"] in lookup:
-            p = lookup[n["parent"]]
-            edges.append(f'<line x1="{p["x"]}" y1="{p["y"]+25}" x2="{n["x"]}" y2="{n["y"]-25}" stroke="#52647d" stroke-width="3" stroke-linecap="round"/>')
-    circles = []
-    for n in nodes:
-        fill = "#dc3545" if n["color"] == "red" else "#080d16"
-        stroke = "#ff7b87" if n["color"] == "red" else "#718096"
-        circles.append(f'<circle cx="{n["x"]}" cy="{n["y"]}" r="25" fill="{fill}" stroke="{stroke}" stroke-width="2.5"/><text x="{n["x"]}" y="{n["y"]+6}" text-anchor="middle" font-family="monospace" font-size="16" font-weight="600" fill="white">{escape(str(n["value"]))}</text>')
-    return f"""
-    <svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
-      <defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#34445b" opacity=".45"/></pattern></defs>
-      <rect width="1000" height="380" rx="16" fill="#0c1626"/>
-      <rect width="1000" height="380" rx="16" fill="url(#dots)"/>
-      {''.join(edges)}
-      {''.join(circles)}
-      <text x="500" y="365" text-anchor="middle" fill="#71839b" font-family="Inter,sans-serif" font-size="12">Árvore de exemplo — valores e cores ilustrativos</text>
-    </svg>"""
-
+if "arvore" not in st.session_state:
+    st.session_state.arvore = criar_arvore_exemplo()
 if "feedback" not in st.session_state:
-    st.session_state.feedback = "A árvore exibida é demonstrativa. A lógica de inserção e remoção será conectada na próxima etapa."
+    st.session_state.feedback = "Simulador conectado! Insira ou remova valores para visualizar o balanceamento."
+    st.session_state.feedback_tipo = "info"
 
 st.markdown("""
 <div class="hero">
@@ -66,48 +37,11 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-left, right = st.columns([0.78, 2.22], gap="large")
+left, right = st.columns((0.78, 2.22), gap="large")
 with left:
-    st.markdown("### ⚙️ Operações")
-    with st.container(border=True):
-        st.markdown("**Inserir elemento**")
-        value_in = st.number_input("Valor para inserir", value=50, step=1, key="insert_value")
-        if st.button("＋ Inserir na árvore", type="primary", use_container_width=True):
-            st.session_state.feedback = f"Solicitação de inserção do valor {value_in} recebida. O algoritmo será conectado na próxima etapa."
-            st.rerun()
-    with st.container(border=True):
-        st.markdown("**Remover elemento**")
-        value_out = st.number_input("Valor para remover", value=10, step=1, key="remove_value")
-        if st.button("－ Remover da árvore", use_container_width=True):
-            st.session_state.feedback = f"Solicitação de remoção do valor {value_out} recebida. O algoritmo será conectado na próxima etapa."
-            st.rerun()
-    if st.button("↻ Restaurar exemplo", use_container_width=True):
-        st.session_state.feedback = "Exemplo demonstrativo restaurado. Nenhuma operação real foi executada."
-        st.rerun()
-    st.markdown('<p class="muted">Nesta versão, os botões são apenas a interface. A árvore ainda não é modificada.</p>', unsafe_allow_html=True)
+    exibir_controles()
 
 with right:
-    st.markdown("### 🌳 Visualização da árvore")
-    st.markdown('<p class="muted">Nós circulares conectados por arestas; vermelho e preto representam as cores dos nós.</p>', unsafe_allow_html=True)
-    components.html(render_svg(NODES), height=400, scrolling=False)
-    cols = st.columns(4)
-    for col, label, value in zip(cols, ["Nós","Altura","Raiz","Estado"], ["7","3","20","Exemplo"]):
-        with col:
-            st.markdown(f'<div class="metric"><div class="metric-label">{label}</div><div class="metric-value">{value}</div></div>', unsafe_allow_html=True)
+    exibir_visualizacao(st.session_state.arvore)
 
-st.markdown("### 📋 Retorno da interface")
-st.info(st.session_state.feedback, icon="ℹ️")
-
-c1, c2 = st.columns(2)
-with c1:
-    st.markdown("**Legenda**")
-    st.markdown('<span style="color:#ff6575">●</span> Nó vermelho &nbsp;&nbsp; <span style="color:#aab8ca">●</span> Nó preto', unsafe_allow_html=True)
-with c2:
-    with st.expander("Próximas etapas"):
-        st.markdown("""
-        1. Criar a classe `No` e a estrutura da árvore.
-        2. Implementar inserção, recoloração e rotações.
-        3. Implementar remoção e os casos de correção.
-        4. Atualizar o SVG após cada operação.
-        5. Criar um modo passo a passo para explicar cada caso.
-        """)
+exibir_informacoes()
