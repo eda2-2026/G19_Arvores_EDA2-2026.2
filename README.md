@@ -45,10 +45,21 @@ At pariatur distinctio ut quod minus id laudantium rerum et velit veniam ut volu
 * **Tecnologia2** (Framework Web micro)
 
 ## 🔧 Como Executar o Projeto
+## Simulador de Árvore Rubro-Negra — Front-end
 
-Siga os passos abaixo para rodar a aplicação na sua máquina local:
+Interface inicial em Streamlit com visualização SVG demonstrativa.
 
+## Executar
+```bash
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
 
+pip install streamlit
+streamlit run app.py
+```
 
 ## 📄 Licença
 
