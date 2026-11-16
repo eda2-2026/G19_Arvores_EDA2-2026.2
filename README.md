@@ -1,8 +1,10 @@
 ## 💻 Sobre o Projeto
 
-Lorem ipsum dolor sit amet. Et quae voluptatem est incidunt eveniet sit dolorem quasi et mollitia accusamus. Sit soluta officiis ut assumenda sunt est vitae eaque.
-Qui reprehenderit laboriosam qui explicabo velit non cupiditate quaerat eum quasi ipsa. Eum nulla debitis sit consectetur minus in consequatur suscipit ut corporis rerum ut nemo inventore aut consequuntur dolorum non quas mollitia. Ex doloremque iste est quia explicabo et necessitatibus placeat eum sequi pariatur a beatae voluptatem est consequuntur voluptates.
-At pariatur distinctio ut quod minus id laudantium rerum et velit veniam ut voluptatem ipsa ea voluptate eveniet. Ut earum debitis est nisi unde qui labore iusto est quod adipisci.
+O **Simulador de Árvore Rubro-Negra** é uma aplicação desenvolvida em Python com o objetivo de auxiliar no aprendizado de Estruturas de Dados 2, especialmente no estudo das Árvores Rubro-Negras (Red-Black Trees).
+
+A proposta é oferecer um ambiente interativo no qual o estudante possa visualizar o funcionamento dessa estrutura, compreender como os elementos são inseridos e removidos e acompanhar as operações necessárias para manter o balanceamento da árvore.
+
+Diferentemente de uma abordagem exclusivamente teórica, o simulador busca tornar os conceitos mais intuitivos por meio de representações gráficas, permitindo observar as alterações na estrutura, as rotações e as mudanças de cores dos nós durante as operações.
 
 ## 👥 Alunos Integrantes
 
@@ -21,13 +23,44 @@ Produzimos um vídeo demonstrativo detalhando o funcionamento prático da nossa 
 
 ## 🧠 O Algoritmo: (...)
 
-Lorem ipsum dolor sit amet. Et quae voluptatem est incidunt eveniet sit dolorem quasi et mollitia accusamus. Sit soluta officiis ut assumenda sunt est vitae eaque.
-Qui reprehenderit laboriosam qui explicabo velit non cupiditate quaerat eum quasi ipsa. Eum nulla debitis sit consectetur minus in consequatur suscipit ut corporis rerum ut nemo inventore aut consequuntur dolorum non quas mollitia. Ex doloremque iste est quia explicabo et necessitatibus placeat eum sequi pariatur a beatae voluptatem est consequuntur voluptates.
-At pariatur distinctio ut quod minus id laudantium rerum et velit veniam ut voluptatem ipsa ea voluptate eveniet. Ut earum debitis est nisi unde qui labore iusto est quod adipisci.
+A Árvore Rubro-Negra é uma estrutura de dados baseada em uma Árvore Binária de Busca (ABB), na qual cada nó possui uma informação adicional: sua cor, que pode ser vermelha ou preta.
+
+Essa estrutura utiliza regras específicas para manter o balanceamento, evitando que a árvore se torne excessivamente desproporcional e garantindo operações eficientes.
+
+### Propriedades da Árvore Rubro-Negra
+
+1. Todo nó é vermelho ou preto.
+2. A raiz da árvore é sempre preta.
+3. Todas as folhas NIL (nós sentinela que representam posições vazias) são pretas.
+4. Um nó vermelho não pode possuir um filho vermelho.
+5. Todos os caminhos de um nó até suas folhas descendentes NIL possuem a mesma quantidade de nós pretos.
+
+### Operações de balanceamento
+
+Para preservar essas propriedades após alterações na árvore, o algoritmo utiliza duas operações principais:
+
+**Rotação à esquerda:** reorganiza os nós deslocando um filho direito para a posição superior.
+
+**Rotação à direita:** reorganiza os nós deslocando um filho esquerdo para a posição superior.
+
+Além das rotações, o algoritmo utiliza a recoloração dos nós para corrigir possíveis violações das propriedades da estrutura.
+
+Na **inserção**, um novo nó é inicialmente vermelho. Em seguida, o algoritmo verifica se sua inserção provocou alguma violação e, quando necessário, aplica os casos de correção, envolvendo rotações e recolorações.
+
+Na **remoção**, o algoritmo verifica se a exclusão comprometeu a quantidade de nós pretos nos caminhos da árvore, aplicando os casos de correção correspondentes.
 
 ---
 
 ## 📊 Complexidade
+
+| Operação | Complexidade |
+| :--- | :--- |
+| `busca` | (O(log n))|
+| `inserção` | (O(log n))|
+| `remoção` | (O(log n))|
+| `rotação à esquerda` | (O(1))|
+| `rotação à direita` | (O(1))|
+| `percurso completo` | (O(n))|
 
 ---
 
@@ -35,14 +68,20 @@ At pariatur distinctio ut quod minus id laudantium rerum et velit veniam ut volu
 
 | Arquivo | Função |
 | :--- | :--- |
-| `exemplo.py` | Implementação de alguma coisa |
-
-> *Documentação gerada para apresentação da disciplina ED2 — Estrutura de Dados e Algoritmos 2.*
+| `no.py` | Classe dos nós e cores |
+| `arvore_rubronegra.py` | Estrutura, rotações e validação |
+| `insercao.py` | Inserção e histórico das operações |
+| `remocao.py` | Remoção e histórico das operações|
+| `visualizacao.py` | Desenho SVG com destaque dos nós |
+| `controles.py` | Navegação Anterior, Próximo e Reiniciar |
+| `informacoes.py` | Explicação dos casos |
+| `app.py` | Integração de tudo |
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Tecnologia1** (Versão 1.x ou superior)
-* **Tecnologia2** (Framework Web micro)
+* **Python** (Linguagem utilizada para implementar a estrutura de dados e os algoritmos.)
+* **Streamlit** (Desenvolvimento da interface interativa e dos controles do simulador.)
+* **SVG (Scalable Vector Graphics)** (Representação gráfica da árvore, dos nós e das conexões entre eles.)
 
 ## 🔧 Como Executar o Projeto
 ## Simulador de Árvore Rubro-Negra — Front-end
