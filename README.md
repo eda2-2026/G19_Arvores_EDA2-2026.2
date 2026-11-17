@@ -14,14 +14,14 @@ Diferentemente de uma abordagem exclusivamente teórica, o simulador busca torna
 
 ## 🎥 Vídeo de Apresentação do Projeto
 
-Produzimos um vídeo demonstrativo detalhando o funcionamento prático da nossa *(projeto)*, o reaproveitamento da estrutura criada em Orientação a Objetos e a explicação da lógica brute do algoritmo...
+Produzimos um vídeo demonstrativo detalhando o funcionamento prático do nosso simulador de árvore rubro-negra...
 
-▶️ **[Clique aqui para assistir diretamente no YouTube](link_do_video)**
+▶️ **[Clique aqui para assistir diretamente no YouTube](https://youtu.be/4nQiFbyjHNE)**
 
 > 💡 *Nota: Caso o player acima não carregue ou o link não funcione, você também pode copiar e colar a seguinte URL no seu navegador:*  
-> `link_do_video`
+> `https://youtu.be/4nQiFbyjHNE`
 
-## 🧠 O Algoritmo: (...)
+## 🧠 Árvore Rubro-Negra
 
 A Árvore Rubro-Negra é uma estrutura de dados baseada em uma Árvore Binária de Busca (ABB), na qual cada nó possui uma informação adicional: sua cor, que pode ser vermelha ou preta.
 
